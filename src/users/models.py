@@ -1,8 +1,18 @@
+from enum import auto
+from strenum import StrEnum
+
+
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
 
 from .managers import UserManager
+
+
+class Role(StrEnum):
+    SENIOR = auto()
+    ADMIN = auto()
+    JUNIOR = auto()
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -16,7 +26,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     date_joined = models.DateTimeField(default=timezone.now)
 
-    role = models.CharField(max_length=20)
+    role = models.CharField(max_length=15)
 
     objects = UserManager()
 

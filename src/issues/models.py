@@ -5,7 +5,8 @@ from users.models import User
 
 class Issue(models.Model):
     title = models.CharField(max_length=100)
-    status = models.PositiveSmallIntegerField()
+    body = models.TextField(null=True)
+    status = models.PositiveSmallIntegerField(choices=ISSUE_STATUS_CHOICES)
 
     junior = models.ForeignKey(
         User,

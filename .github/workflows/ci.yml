@@ -12,5 +12,5 @@ jobs:
           python-version: '3.9'
       - name: install dependencies
         run: pip install black ruff isort
-      - name: run formatets
+      - name: run formatters
         run: python -m black --check . && python -m isort --check .
