@@ -1,4 +1,5 @@
 from rest_framework import generics, serializers
+
 from users.enums import Role
 
 from .enums import Status
@@ -18,6 +19,7 @@ class IssueSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         attrs["status"] = Status.OPENED
         return attrs
+
 
 class IssuesAPI(generics.ListCreateAPIView):
     http_method_names = ["get", "post"]

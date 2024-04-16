@@ -1,10 +1,9 @@
 from enum import auto
-from strenum import StrEnum
-
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
+from strenum import StrEnum
 
 from .managers import UserManager
 
