@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from rest_framework_simplejwt.views import (TokenObtainPairView,
-                                            token_obtain_pair)
+from rest_framework_simplejwt.views import TokenObtainPairView, token_obtain_pair
 
 from issues.api import IssuesAPI, IssuesRetrieveUpdateDeleteAPI
 from users.api import create_user
