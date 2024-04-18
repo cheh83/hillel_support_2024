@@ -3,11 +3,13 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from issues.api import IssuesAPI, IssuesRetrieveUpdateDeleteAPI
-from users.api import create_user
+from users.api import UserListCreateAPI
 
 urlpatterns = [
+    # admin
     path("admin/", admin.site.urls),
-    path("users/", create_user),
+    # users
+    path("users/", UserListCreateAPI.as_view()),
     path("issues/", IssuesAPI.as_view()),
     path("issues/<int:id>", IssuesRetrieveUpdateDeleteAPI.as_view()),
     # Authentication
