@@ -2,13 +2,11 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView  # noqa
 
-from issues.api import (  # noqa
-    IssuesAPI,  # noqa
-    IssuesRetrieveUpdateDeleteAPI,  # noqa
-    issues_close,  # noqa
-    issues_take,  # noqa
-    messages_api_dispatcher,  # noqa
-)  # noqa
+from issues.api import IssuesAPI  # noqa
+from issues.api import IssuesRetrieveUpdateDeleteAPI  # noqa
+from issues.api import issues_close  # noqa
+from issues.api import issues_take  # noqa
+from issues.api import messages_api_dispatcher  # noqa; noqa
 from users.api import UserListCreateAPI
 
 urlpatterns = [
