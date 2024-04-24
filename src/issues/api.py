@@ -1,7 +1,6 @@
 from django.db.models import Q
-from rest_framework import (generics, permissions, request, response,
-                            serializers)
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework import generics, response, serializers
+from rest_framework.decorators import api_view
 
 from users.enums import Role
 
@@ -15,8 +14,7 @@ class IssueSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Issue
-        # fields = ["id", "title", "body", "junior_id"]
-        # exclude = ["id"]
+
         fields = "__all__"
 
     def validate(self, attrs):
@@ -96,11 +94,6 @@ def messages_api_dispatcher(request: Request, issue_id: int):
         serializer.save()
 
         return response.Response(serializer.validated_data)
-
-
-# HTTP PUT /issues/13/close
-# HTTP PUT /issues/13
-# request.body = {"status": "CLOSED"}
 
 
 @api_view(["PUT"])
