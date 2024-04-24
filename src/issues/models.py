@@ -1,16 +1,19 @@
 from django.db import models
 from django.db.models import Q
-from users.models import User
 
+from users.models import User
 
 ISSUE_STATUS_CHOICES = (
     (1, "Opened"),
     (2, "In progress"),
     (3, "closed"),
 )
+
+
 class IssuesManager(models.Manager):
     def filter_by_participant(self, user: User):
         return self.filter(Q(junior=user) | Q(senior=user))
+
 
 class Issue(models.Model):
     title = models.CharField(max_length=100)
@@ -30,7 +33,6 @@ class Issue(models.Model):
     )
 
     objects = IssuesManager()
-
 
     def __repr__(self) -> str:
         return f"Issue[{self.pk} {self.title}]"

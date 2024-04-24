@@ -1,8 +1,10 @@
-from rest_framework import generics, serializers, request, response, permissions
+from django.db.models import Q
+from rest_framework import (generics, permissions, request, response,
+                            serializers)
 from rest_framework.decorators import api_view, permission_classes
 
 from users.enums import Role
-from django.db.models import Q
+
 from .enums import Status
 from .models import Issue, Message
 
@@ -31,12 +33,10 @@ class IssuesAPI(generics.ListCreateAPIView):
             return Issue.objects.filter(junior=self.request.user)
         elif self.request.user.role == Role.SENIOR:
             return Issue.objects.filter(
-                Q(senior=self.request.user)
-                | (Q(senior=None)) & Q(status=Status.OPENED)
+                Q(senior=self.request.user) | (Q(senior=None)) & Q(status=Status.OPENED)
             )
         else:
             return Issue.objects.all()
-        
 
     def post(self, request):
         if request.user.role == Role.SENIOR:
@@ -67,7 +67,7 @@ class ModelSerializer(serializers.ModelSerializer):
             self.validated_data["issue_id"] = issue.id
 
         return super().save()
-    
+
 
 @api_view(["GET", "POST"])
 def messages_api_dispatcher(request: Request, issue_id: int):
@@ -97,9 +97,11 @@ def messages_api_dispatcher(request: Request, issue_id: int):
 
         return response.Response(serializer.validated_data)
 
+
 # HTTP PUT /issues/13/close
 # HTTP PUT /issues/13
 # request.body = {"status": "CLOSED"}
+
 
 @api_view(["PUT"])
 def issues_close(request: Request, id: int):
@@ -115,7 +117,7 @@ def issues_take(request: Request, id: int):
 
     if request.user.role != Role.SENIOR:
         raise PermissionError("Only senior users can take issues")
-    
+
     if (issue.status != Status.OPENED) or (issue.senior is not None):
         return response.Response(
             {"message": "Issue is not Opened or senior is set..."},
