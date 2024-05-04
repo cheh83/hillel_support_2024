@@ -3,8 +3,11 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView  # noqa
 from rest_framework_simplejwt.views import token_obtain_pair  # noqa
 
-from issues.api import (IssuesAPI, IssuesRetrieveUpdateDeleteAPI, issues_close,
-                        issues_take, messages_api_dispatcher)
+from issues.api import IssuesAPI  # noqa
+from issues.api import IssuesRetrieveUpdateDeleteAPI  # noqa
+from issues.api import issues_close  # noqa
+from issues.api import issues_take  # noqa
+from issues.api import messages_api_dispatcher  # noqa; noqa
 from users.api import UserListCreateAPI, resend_activation_mail
 
 urlpatterns = [
