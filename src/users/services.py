@@ -1,4 +1,10 @@
+import json
 import uuid
+
+import redis
+from django.conf import settings
+
+from shared.cache import CacheService
 
 from .tasks import send_activation_mail
 
@@ -43,7 +49,11 @@ class Activator:
         # create Redis Connection instance
         # save record to the Redis with TTL of 1 day
 
-        raise NotImplementedError
+        cache = CacheService()
+        payload = {"user_id": internal_user_id}
+        cache.save(
+            namespace="activation", key=str(activation_key), instance=payload, ttl=2_000
+        )
 
     def validate_activation(self, activation_key: uuid.UUID) -> None:
         """Validate the activation UUID in the cache with requested.

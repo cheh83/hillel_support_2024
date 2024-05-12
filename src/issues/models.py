@@ -1,12 +1,20 @@
 from django.db import models
 from django.db.models import Q
 
+from shared.django import TimestampMixin
 from users.models import User
+
+# from enum import IntEnum
+# class IssueStatusChoices(IntEnum):
+#     OPENED = 1
+#     IN_PROGRESS = 2
+
+#     def choices(cls): ...
 
 ISSUE_STATUS_CHOICES = (
     (1, "Opened"),
     (2, "In progress"),
-    (3, "closed"),
+    (3, "Closed"),
 )
 
 
@@ -15,7 +23,7 @@ class IssuesManager(models.Manager):
         return self.filter(Q(junior=user) | Q(senior=user))
 
 
-class Issue(models.Model):
+class Issue(TimestampMixin):
     title = models.CharField(max_length=100)
     body = models.TextField(null=True)
     status = models.PositiveSmallIntegerField(choices=ISSUE_STATUS_CHOICES)
@@ -35,7 +43,10 @@ class Issue(models.Model):
     objects = IssuesManager()
 
     def __repr__(self) -> str:
-        return f"Issue[{self.pk} {self.title}]"
+        return f"Issue[{self.pk} {self.title[:10]}]"
+
+    def __str__(self) -> str:
+        return self.title[:10]
 
 
 # first_issue: Issue | None = Issue.objects.first()
