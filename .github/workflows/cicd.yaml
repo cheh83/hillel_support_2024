@@ -17,5 +17,3 @@ jobs:
       - name: Run linter
         run: python -m ruff .
 
-  deploy-to-production:
-    ...
